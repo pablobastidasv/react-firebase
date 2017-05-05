@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import TicketComponent from './TicketsComponent';
+
 import firebase from 'firebase';
 
 const firebaseConfig = {
@@ -17,7 +19,7 @@ class App extends Component{
   render(){
     return (
       <div>
-        Hello world!!!
+        <TicketComponent />
       </div>
     );
   }

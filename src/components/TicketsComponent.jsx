@@ -1,7 +1,7 @@
 import React from 'react';
 
 const TicketCard = (props) => {
-  render (
+  return (
     <div>
       ...
     </div>
@@ -9,7 +9,7 @@ const TicketCard = (props) => {
 }
 
 const TicketList = (props) => {
-  render(
+  return (
     <div>
       ...
     </div>
@@ -17,9 +17,9 @@ const TicketList = (props) => {
 }
 
 const TicketSearchForm = (props) => {
-  render(
+  return (
     <div>
-      ...
+      <input type="text"/>
     </div>
   );
 }
@@ -30,14 +30,14 @@ class TicketComponent extends React.Component {
     super(props);
   }
 
-  render() {
+  render(){
     return (
       <div>
-        <PqrSearchForm />
-        <PqrCardList />
+        <TicketSearchForm />
+        <TicketList />
       </div>
     );
-  }
+  };
 }
 
 export default TicketComponent;

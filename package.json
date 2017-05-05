@@ -4,11 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"npm run dev\" \"npm run serve\"",
-    "serve": "webpack-dev-server --content-base=public --colors --hot",
-    "dev": "webpack -d --watch",
-    "build": "webpack -p",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "serve": "webpack-dev-server --content-base=public --colors --inline --client-log-level=info",
+    "build": "webpack -p"
   },
   "keywords": [],
   "author": "",
@@ -19,7 +16,6 @@
     "react-dom": "^15.5.4"
   },
   "devDependencies": {
-    "concurrently": "^3.4.0",
     "babel-core": "^6.24.1",
     "babel-loader": "^7.0.0",
     "babel-preset-env": "^1.4.0",
