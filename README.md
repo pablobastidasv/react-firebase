@@ -1,6 +1,6 @@
-#SQRs App
+# SQRs App
 
-## Firebase configuration
+## Firebase configuration
 
 Copy and rename the `config.js.example` to `config.js`.
 
@@ -25,7 +25,7 @@ Now you have to see a dialog with the values to put in the `config.js` file
 
 ![Configuration info](images/firebase4.png "Configuration info")
 
-## Enabling google authentication
+## Enabling google authentication
 
 Once you have the firebase configuration done, you have to enable the firebase
 authentication. To this you have to clic in `Authentication` option on the
