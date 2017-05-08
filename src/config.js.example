@@ -1,0 +1,10 @@
+// Check the readme for correct configuration
+
+export const firebase_config = {
+  'apiKey': "",
+  'authDomain': "",
+  'databaseURL': "",
+  'projectId': "",
+  'storageBucket': "",
+  'messagingSenderId': ""
+};

@@ -5,16 +5,9 @@ import firebase from 'firebase';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import MainContainer from './MainContainer'
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCzFsTuwr6Y31K7JBGSC17HoPaM1DlhvOI",
-  authDomain: "angular-firebase-93cc5.firebaseapp.com",
-  databaseURL: "https://angular-firebase-93cc5.firebaseio.com",
-  projectId: "angular-firebase-93cc5",
-  storageBucket: "angular-firebase-93cc5.appspot.com",
-  messagingSenderId: "346517573094"
-};
+import * as Config from '../config'
 
-firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(Config.firebase_config);
 
 class App extends Component{
 

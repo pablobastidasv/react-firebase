@@ -6,6 +6,7 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import Dialog from 'material-ui/Dialog';
 import Snackbar from 'material-ui/Snackbar'
 import TextField from 'material-ui/TextField'
+import RaisedButton from 'material-ui/RaisedButton';
 
 class TicketForm extends React.Component{
 
@@ -43,7 +44,7 @@ class TicketForm extends React.Component{
       <FlatButton label='Cancelar'
         primary={true}
         onTouchTap={this.closeForm}/>,
-      <FlatButton label='Crear'
+      <RaisedButton label='Crear'
         primary={true}
         onTouchTap={this.saveTicket}/>
     ];
