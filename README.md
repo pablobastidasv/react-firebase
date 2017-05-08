@@ -4,7 +4,7 @@
 
 Copy and rename the `config.js.example` to `config.js`.
 
-Open [the firebase console](console.firebase.google.com) and log in with your
+Open [the firebase console](https://console.firebase.google.com) and log in with your
 google user.
 
 ![Firebase welcome page](images/firebase1.png "Firebase welcome")
