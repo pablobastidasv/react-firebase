@@ -56,8 +56,8 @@ class MainContainer extends Component{
     provider.addScope('profile');
     provider.addScope('email');
     firebase.auth().signInWithPopup(provider)
-    .then(r => console.log(`Email autenticado ${r.user.email}`))
-    .catch(e => console.log(`Error ${error.code}: ${error.message}`));
+      .then(r => console.log(`Email autenticado ${r.user.email}`))
+      .catch(e => console.log(`Error ${error.code}: ${error.message}`));
   }
 
   renderApp(){
