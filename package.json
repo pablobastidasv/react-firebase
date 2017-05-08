@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "deploy": "npm run build && firebase deploy",
     "serve": "webpack-dev-server --content-base=public --progress --colors --inline --client-log-level=info",
     "build": "webpack -p"
   },

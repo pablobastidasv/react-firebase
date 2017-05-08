@@ -44,6 +44,7 @@ class MainContainer extends Component{
     let newUser = {
       company: '900798416',
       displayName: currentUser.displayName,
+      email: currentUser.email,
       photoURL: currentUser.photoURL
     };
     this.userRef
