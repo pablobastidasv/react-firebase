@@ -43,3 +43,23 @@ right side, click in this icon and enable the Google Authentication. Finally
 click in `Save` (`Guardar`)
 
 ![Enabling Google Authentication](images/firebase7.png "Enabling Google Authentication")
+
+## Start the application
+
+The app was developed using:
+  - node v6.9.4
+  - npm v3.10.10
+  - yarn v0.16.1
+  (You should have install this depedencies)
+
+### Install yarn
+
+`npm install -g yarn`
+
+### Excecuting the application in dev mode
+
+`npm run serve`
+
+### Bulding
+
+`npm run build`
