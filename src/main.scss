@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
+
+$fontMainColor: black;
+
+html, body {
+  height: 100%;
+  margin: 0; padding: 0;
+}
+
+.container {
+}
+
+div#ticketsList{
+  display: flex;
+  padding: 40px;
+  flex-flow: row wrap;
+}
+
+.ticketCard{
+  flex-grow: 1;
+  width: 300px;
+  margin: 5px;
+}
+
+.floatButon{
+  position: absolute;
+  bottom: 20;
+  right: 20;
+}

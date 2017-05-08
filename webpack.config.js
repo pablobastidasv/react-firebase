@@ -5,12 +5,11 @@ var PUBLIC_DIR = path.resolve(__dirname, 'public');
 var BUILD_DIR = path.resolve(__dirname, 'public/js');
 var APP_DIR = path.resolve(__dirname, 'src');
 
-var config = {
+module.exports = {
   entry: APP_DIR + '/index.jsx',
   resolve: {
     moduleExtensions: [
-      'src',
-      "node_modules"
+      'src'
     ],
     extensions: ['.js', '.jsx']
   },
@@ -22,9 +21,14 @@ var config = {
   module : {
     loaders : [
       {
-        test : /\.jsx?/,
+        test : /\.jsx?$/,
         include : APP_DIR,
         loader : 'babel-loader'
+      },
+      {
+        test: /\.scss$/,
+        include: APP_DIR,
+        loader: ['style-loader', 'css-loader', 'sass-loader']
       }
     ]
   },
@@ -32,7 +36,6 @@ var config = {
     contentBase: PUBLIC_DIR,
     compress: true,
     port: 9000
-  }
+  },
+  devtool: 'eval-source-map'
 };
-
-module.exports = config;

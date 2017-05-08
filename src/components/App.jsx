@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import TicketComponent from './TicketsComponent';
-
 import firebase from 'firebase';
+
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import MainContainer from './MainContainer'
 
 const firebaseConfig = {
   apiKey: "AIzaSyCzFsTuwr6Y31K7JBGSC17HoPaM1DlhvOI",
@@ -18,9 +20,9 @@ class App extends Component{
 
   render(){
     return (
-      <div>
-        <TicketComponent />
-      </div>
+      <MuiThemeProvider>
+        <MainContainer />
+      </MuiThemeProvider>
     );
   }
 
