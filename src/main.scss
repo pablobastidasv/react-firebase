@@ -80,3 +80,15 @@ div#ticketsList{
   justify-content: center;
   align-items: center;
 }
+
+.registrationForm{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  padding: 50px;
+}
+
+.registrationForm{
+  display: flex;
+  flex-flow: column;
+}

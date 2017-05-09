@@ -6,13 +6,16 @@ import TicketComponent from './TicketsComponent';
 import Login from './Login'
 
 import AppBar from 'material-ui/AppBar';
+import CircularProgress from 'material-ui/CircularProgress'
 
 
 class MainContainer extends Component{
   constructor(){
     super();
     this.state = {
-      user: null
+      user: null,
+      loadingLogin: true,
+      showSubscription: false,
     }
     this.userRef = firebase.database().ref('/users/');
     this.onLogin = this.onLogin.bind(this);
@@ -22,6 +25,8 @@ class MainContainer extends Component{
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.userExist(user.uid);
+      } else {
+        this.setState({loadingLogin: false});
       }
     });
   }
@@ -31,25 +36,41 @@ class MainContainer extends Component{
       .then(r => {
         let user = r.val();
         if(user){
+          this.updateLastLogin(uid);
           this.setState({user});
         } else {
-          this.createUser(uid);
+          this.setState({
+            loadingLogin: false,
+            showSubscription: true
+          });
         }
       })
       .catch(e => console.log(`Error ${e.code}: ${e.message}`));
   }
 
-  createUser(uid){
+  updateLastLogin(uid){
+    let lastLogin = new Date().toISOString();
+    { lastLogin }
+    this.userRef.child(uid)
+      .update({ lastLogin });
+  }
+
+  createUser(){
+    let uid = firebase.auth().uid;
+    console.log(`User id = ${uid}`);
     let currentUser = firebase.auth().currentUser;
+    let registrationDate = new Date().toISOString();
     let newUser = {
       company: '900798416',
       displayName: currentUser.displayName,
       email: currentUser.email,
-      photoURL: currentUser.photoURL
+      photoURL: currentUser.photoURL,
+      lastLogin: registrationDate,
+      registrationDate
     };
     this.userRef
       .child(uid)
-      .push(newUser, () => this.userExist(uid));
+      .set(newUser, () => this.userExist(uid));
   }
 
   onLogin(){
@@ -58,17 +79,22 @@ class MainContainer extends Component{
     provider.addScope('email');
     firebase.auth().signInWithPopup(provider)
       .then(r => console.log(`Email autenticado ${r.user.email}`))
-      .catch(e => console.log(`Error ${error.code}: ${error.message}`));
+      .catch(e => console.log(`Error ${e.code}: ${e.message}`));
   }
 
   renderApp(){
     if(this.state.user){
       return (
-        <TicketComponent user={ this.state.user } />
+        <div>
+          <AppBar title="PQRs"/>
+          <TicketComponent user={ this.state.user } />
+        </div>
       );
     } else {
       return (
-        <Login onClick={ this.onLogin }/>
+        <Login onClick={ this.onLogin }
+          showSubscription={ this.state.showSubscription }
+          loading={ this.state.loadingLogin }/>
       );
     }
   }
@@ -76,7 +102,6 @@ class MainContainer extends Component{
   render(){
     return (
       <div>
-        <AppBar title="PQRs"/>
         <div className='container'>
           { this.renderApp() }
         </div>
