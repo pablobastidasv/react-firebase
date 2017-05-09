@@ -29,6 +29,8 @@ const RegistrationForm = (props) => {
             />
             <SelectField
               floatingLabelText="Conjunto residencial"
+              value={props.company}
+              onChange={props.handleCompanyChange}
             >
               <MenuItem value='900798416' primaryText="Bassan soluciones integrales" />
               <MenuItem value='torres_barce' primaryText="Torres de Barcelona" />
@@ -52,13 +54,31 @@ class Login extends React.Component{
   constructor(props){
     super(props);
 
+    this.state = {
+      company: null
+    };
+
     this.renderButton = this.renderButton.bind(this);
+    this.register = this.register.bind(this);
+    this.handleCompanyChange = this.handleCompanyChange.bind(this);
+  }
+
+  register(){
+    this.props.onRegister(this.state.company);
+  }
+
+  handleCompanyChange(event, index, value) {
+    this.setState({
+      company: value
+    });
   }
 
   renderButton(){
     if(this.props.showSubscription){
       return (
-        <RegistrationForm onRegister={ this.props.onRegister }/>
+        <RegistrationForm onRegister={ this.register }
+          company={this.state.company}
+          handleCompanyChange={ this.handleCompanyChange }/>
       );
     }else if(this.props.loading) {
       return (
