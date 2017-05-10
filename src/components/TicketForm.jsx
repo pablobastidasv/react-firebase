@@ -18,9 +18,9 @@ class TicketForm extends React.Component{
       snackBarMsg: 'El ticket ha sido creado exitosamente.'
     }
 
-  this.openForm = this.openForm.bind(this);
-  this.closeForm = this.closeForm.bind(this);
-  this.saveTicket = this.saveTicket.bind(this);
+    this.openForm = this.openForm.bind(this);
+    this.closeForm = this.closeForm.bind(this);
+    this.saveTicket = this.saveTicket.bind(this);
   }
 
   openForm(){

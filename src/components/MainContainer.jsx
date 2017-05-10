@@ -17,7 +17,9 @@ class MainContainer extends Component{
       loadingLogin: true,
       showSubscription: false,
     }
+
     this.userRef = firebase.database().ref('/users/');
+
     this.onLogin = this.onLogin.bind(this);
     this.createUser = this.createUser.bind(this);
   }
@@ -56,19 +58,21 @@ class MainContainer extends Component{
       .update({ lastLogin });
   }
 
-  createUser(company){
+  createUser(company, apartment){
     let uid = firebase.auth().currentUser.uid;
-    console.log(`User id = ${uid}`);
+
     let currentUser = firebase.auth().currentUser;
     let registrationDate = new Date().toISOString();
+
     let newUser = {
-      company: company,
+      company, apartment,
       displayName: currentUser.displayName,
       email: currentUser.email,
       photoURL: currentUser.photoURL,
       lastLogin: registrationDate,
       registrationDate
     };
+
     this.userRef
       .child(uid)
       .set(newUser, () => this.userExist(uid));

@@ -8,43 +8,51 @@ import SelectField from 'material-ui/SelectField'
 import RaisedButton from 'material-ui/RaisedButton'
 import MenuItem from 'material-ui/MenuItem'
 
+import firebase from 'firebase';
+
 const RegistrationForm = (props) => {
   return (
     <div className="registrationForm">
-      <Card>
-        <CardHeader title='Formulario de registro'
-          subtitle='Ingrese la información requerida para continuar su inicio de sesión'
-          avatar="./img/key.svg"/>
-        <CardText>
-          <div className="registrationForm">
-            <TextField
-              disabled={true}
-              defaultValue='Pablo Bastidas'
-              floatingLabelText="Nombre"
-            />
-            <TextField
-              disabled={true}
-              defaultValue='pablobastidasv@gmail.com'
-              floatingLabelText="Correo electrónico"
-            />
-            <SelectField
-              floatingLabelText="Conjunto residencial"
-              value={props.company}
-              onChange={props.handleCompanyChange}
-            >
-              <MenuItem value='900798416' primaryText="Bassan soluciones integrales" />
-              <MenuItem value='torres_barce' primaryText="Torres de Barcelona" />
-              <MenuItem value='rincon_parque' primaryText="Rincon del parque" />
-              <MenuItem value='niza_ix' primaryText="Niza IX" />
-            </SelectField>
-          </div>
-        </CardText>
-        <CardActions>
-          <RaisedButton label="Guardar"
-            primary={true}
-            onTouchTap={ props.onRegister }/>
-        </CardActions>
+      <form onSubmit={ props.onRegister }>
+        <Card>
+          <CardHeader title='Formulario de registro'
+            subtitle='Ingrese la información requerida para continuar su inicio de sesión'
+            avatar="./img/key.svg"/>
+          <CardText>
+            <div className="registrationForm">
+              <TextField
+                disabled={true}
+                defaultValue={props.userName}
+                floatingLabelText="Nombre"
+              />
+              <TextField
+                disabled={true}
+                defaultValue={props.userEmail}
+                floatingLabelText="Correo electrónico"
+              />
+              <SelectField
+                floatingLabelText="Copropiedad"
+                value={props.company}
+                onChange={props.handleCompanyChange}
+                errorText={props.companySelectionError}
+                required
+              >
+                {props.companyItems.map( item => <MenuItem key={ item.value } {...item}/>)}
+              </SelectField>
+              <TextField floatingLabelText='Apartamento'
+                value={props.apartment}
+                onChange={props.handleApartmentChange}
+                errorText={ props.apartmentInputError }
+              />
+            </div>
+          </CardText>
+          <CardActions>
+            <RaisedButton label="Guardar"
+              type="submit"
+              primary={true}/>
+          </CardActions>
       </Card>
+      </form>
     </div>
   );
 }
@@ -55,16 +63,66 @@ class Login extends React.Component{
     super(props);
 
     this.state = {
-      company: null
+      company: null,
+      apartment: '',
+      companyItems: [],
+      user: firebase.auth().currentUser
     };
+
+    this.companiesRef = firebase.database().ref('/companies/');
 
     this.renderButton = this.renderButton.bind(this);
     this.register = this.register.bind(this);
     this.handleCompanyChange = this.handleCompanyChange.bind(this);
+    this.handleApartmentChange = this.handleApartmentChange.bind(this);
+    this.updateCompanyItems = this.updateCompanyItems.bind(this);
   }
 
-  register(){
-    this.props.onRegister(this.state.company);
+  updateCompanyItems(snap){
+    let companyItem = {
+      value: snap.key,
+      primaryText: snap.val().shortName
+    };
+
+    var companyItems = this.state.companyItems.slice()
+    companyItems.push(companyItem);
+    this.setState({
+      companyItems
+    });
+  }
+
+  componentWillMount(){
+    this.companiesRef
+      .orderByChild('shortName')
+      .on('child_added', this.updateCompanyItems);
+  }
+
+  register(event){
+    event.preventDefault();
+    let isValid = true;
+
+    // Company validation
+    if(this.state.company){
+      this.setState({companySelectionError: ""});
+    } else {
+      isValid = false;
+      this.setState({companySelectionError: "Seleccione su copropiedad."});
+    }
+
+    // Apartment validation
+    if(this.state.apartment && 0 !== this.state.length){
+      this.setState({apartmentInputError: ""});
+    } else {
+      isValid = false;
+      this.setState({apartmentInputError: "Seleccione el apartamento donde reside."});
+    }
+
+    if(isValid)
+      this.props.onRegister(this.state.company, this.state.apartment);
+  }
+
+  handleApartmentChange(event, apartment){
+    this.setState({apartment})
   }
 
   handleCompanyChange(event, index, value) {
@@ -78,7 +136,15 @@ class Login extends React.Component{
       return (
         <RegistrationForm onRegister={ this.register }
           company={this.state.company}
-          handleCompanyChange={ this.handleCompanyChange }/>
+          handleCompanyChange={ this.handleCompanyChange }
+          apartment={ this.state.apartment }
+          handleApartmentChange={ this.handleApartmentChange }
+          companyItems={ this.state.companyItems }
+          userName={ firebase.auth().currentUser.displayName }
+          userEmail={ firebase.auth().currentUser.email }
+          companySelectionError={ this.state.companySelectionError }
+          apartmentInputError={ this.state.apartmentInputError }
+        />
       );
     }else if(this.props.loading) {
       return (
