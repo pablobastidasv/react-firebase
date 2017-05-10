@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "tickets-manager-dev"
+    "default": "tickets-manager-dev",
+    "staging": "tickets-manager-dev"
   }
 }
