@@ -11,13 +11,10 @@ const TicketCard = (props) => {
   return (
     <Card className="ticketCard">
       <CardHeader title={props.title}
-        avatar={firebase.auth().currentUser.photoURL}
-        subtitle={firebase.auth().currentUser.displayName}/>
+        avatar={props.user.photoUrl}
+        subtitle={props.user.displayName}/>
       <CardText>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-        Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-        Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
+        { props.description }
       </CardText>
     </Card>
   );
@@ -26,7 +23,7 @@ const TicketCard = (props) => {
 const TicketList = (props) => {
   return (
     <div id='ticketsList'>
-      {props.tickets.map( ticket => <TicketCard {...ticket}/>)}
+      {props.tickets.map( ticket => <TicketCard key={ticket.key} {...ticket}/>)}
     </div>
   );
 }
@@ -38,31 +35,37 @@ class TicketComponent extends React.Component {
 
     this.state = {
       user: props.user,
-      tickets: [
-          {
-            'key': '0',
-            'title': 'Olor a mariguana',
-            'date': 1493981280
-          },
-          {
-            'key': '1',
-            'title': 'Maquinas gym con problemas',
-            'date': 1494024480
-          },
-          {
-            'key': '2',
-            'title': 'Ascensor balo',
-            'date': 1494020040
-          }
-      ]
+      tickets: []
     };
+
+    this.ticketsRef = firebase.database()
+      .ref('tickets')
+      .child(props.user.company);
+  }
+
+  componentWillMount(){
+    this.ticketsRef.limitToLast(10)
+      .orderByKey().on('child_added', (snap) => {
+        let newTicket = Object.assign({}, snap.val());
+        if( newTicket.description.length > 250 ){
+          newTicket.description = newTicket.description.substring(0, 250) + "..."
+        }
+        newTicket.key = snap.key;
+
+        let tickets = this.state.tickets.slice()
+        tickets.unshift(newTicket);
+
+        this.setState({
+          tickets
+        });
+      });
   }
 
   render(){
     return (
       <div>
         <TicketList tickets={ this.state.tickets }/>
-        <TicketForm />
+        <TicketForm user={ this.state.user }/>
       </div>
     );
   };

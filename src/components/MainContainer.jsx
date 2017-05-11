@@ -37,8 +37,9 @@ class MainContainer extends Component{
   userExist(uid){
     this.userRef.child(uid).once('value')
       .then(r => {
-        let user = r.val();
+        let user = r.val()
         if(user){
+          user.uid = r.key;
           this.updateLastLogin(uid);
           this.setState({user});
         } else {
