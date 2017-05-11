@@ -45,8 +45,8 @@ class TicketForm extends React.Component{
     let ticket = Object.assign({}, this.state.ticket);
     ticket.date = new Date().toISOString();
     ticket.priority = null;
+    ticket.userId = this.state.user.uid
     ticket.user = {
-      uid: this.state.user.uid,
       photoUrl: this.state.user.photoURL,
       displayName: this.state.user.displayName
     }

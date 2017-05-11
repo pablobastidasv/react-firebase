@@ -19,6 +19,7 @@ class MainContainer extends Component{
     }
 
     this.userRef = firebase.database().ref('/users/');
+    this.companiesRef = firebase.database().ref('/companies/');
 
     this.onLogin = this.onLogin.bind(this);
     this.createUser = this.createUser.bind(this);
@@ -41,7 +42,16 @@ class MainContainer extends Component{
         if(user){
           user.uid = r.key;
           this.updateLastLogin(uid);
-          this.setState({user});
+
+          this.companiesRef.child(user.company).child('admins')
+            .once('value', r => {
+              let value = r.val();
+              if(value[user.uid]){
+                user.companyAdmin = value[user.uid];
+              }
+              this.setState({user});
+            });
+
         } else {
           this.setState({
             loadingLogin: false,

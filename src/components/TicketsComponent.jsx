@@ -44,8 +44,16 @@ class TicketComponent extends React.Component {
   }
 
   componentWillMount(){
-    this.ticketsRef.limitToLast(10)
-      .orderByKey().on('child_added', (snap) => {
+    let _ticketsRef = null;
+    if (this.state.user.companyAdmin){
+      _ticketsRef = this.ticketsRef;
+    } else {
+      _ticketsRef = this.ticketsRef.orderByChild('userId').equalTo(this.state.user.uid);
+    }
+
+    _ticketsRef
+      .limitToLast(10)
+      .on('child_added', (snap) => {
         let newTicket = Object.assign({}, snap.val());
         if( newTicket.description.length > 250 ){
           newTicket.description = newTicket.description.substring(0, 250) + "..."
