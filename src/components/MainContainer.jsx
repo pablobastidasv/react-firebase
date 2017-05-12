@@ -19,7 +19,7 @@ const Menu = (props) => {
       open={props.open}
       onRequestChange={props.setOpenMenu}
     >
-      <MenuItem onTouchTap={props.logout}
+      <MenuItem onTouchTap={() => firebase.auth().signOut()}
         leftIcon={ <ExitToApp /> }
       >
         Cerrar sesión
@@ -44,7 +44,6 @@ class MainContainer extends Component{
     this.onLogin = this.onLogin.bind(this);
     this.handleCloseMenu = this.handleCloseMenu.bind(this);
     this.createUser = this.createUser.bind(this);
-    this.logout = this.logout.bind(this);
     this.setOpenMenu = this.setOpenMenu.bind(this);
   }
 
@@ -65,18 +64,12 @@ class MainContainer extends Component{
       if (user) {
         this.userExist(user.uid);
       } else {
-        this.setState({loadingLogin: false});
+        this.handleCloseMenu();
+        this.setState({
+          loadingLogin: false,
+          user: null
+        });
       }
-    });
-  }
-
-  logout(){
-    firebase.auth().signOut()
-    .then(() => {
-      this.setState({
-        user: null
-      });
-      this.handleCloseMenu();
     });
   }
 
@@ -138,7 +131,7 @@ class MainContainer extends Component{
     var provider = new firebase.auth.GoogleAuthProvider();
     provider.addScope('profile');
     provider.addScope('email');
-    firebase.auth().signInWithPopup(provider)
+    firebase.auth().signInWithRedirect(provider)
       .then(r => console.log(`Email autenticado ${r.user.email}`))
       .catch(e => console.log(`Error ${e.code}: ${e.message}`));
   }
@@ -150,7 +143,6 @@ class MainContainer extends Component{
           <AppBar title="PQRs" onLeftIconButtonTouchTap={this.handleCloseMenu}/>
           <Menu open={this.state.openMenu}
             handleClose={this.handleCloseMenu}
-            logout={this.logout}
             setOpenMenu={this.setOpenMenu}
           />
           <TicketComponent user={ this.state.user } />
