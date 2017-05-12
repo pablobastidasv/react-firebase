@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import TicketComponent from './TicketsComponent';
+import TicketComponent from './tickets/TicketsComponent';
 import firebase from 'firebase';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'

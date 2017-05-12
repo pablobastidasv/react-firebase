@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import firebase from 'firebase';
 
-import TicketComponent from './TicketsComponent';
+import TicketComponent from './tickets/TicketsComponent';
 import Login from './Login'
 
 import AppBar from 'material-ui/AppBar';
