@@ -7,7 +7,25 @@ import Login from './Login'
 
 import AppBar from 'material-ui/AppBar';
 import CircularProgress from 'material-ui/CircularProgress'
+import MenuItem from 'material-ui/MenuItem'
+import Drawer from 'material-ui/Drawer'
+import ExitToApp from 'material-ui/svg-icons/action/exit-to-app'
 
+const Menu = (props) => {
+  return(
+    <Drawer
+      docked={false}
+      width={200}
+      open={props.open}
+    >
+      <MenuItem onTouchTap={props.logout}
+        leftIcon={ <ExitToApp /> }
+      >
+        Cerrar sesión
+      </MenuItem>
+    </Drawer>
+  )
+}
 
 class MainContainer extends Component{
   constructor(){
@@ -16,13 +34,22 @@ class MainContainer extends Component{
       user: null,
       loadingLogin: true,
       showSubscription: false,
+      openMenu: false,
     }
 
     this.userRef = firebase.database().ref('/users/');
     this.companiesRef = firebase.database().ref('/companies/');
 
     this.onLogin = this.onLogin.bind(this);
+    this.handleCloseMenu = this.handleCloseMenu.bind(this);
     this.createUser = this.createUser.bind(this);
+    this.logout = this.logout.bind(this);
+  }
+
+  handleCloseMenu(){
+    this.setState({
+      openMenu: !this.state.openMenu
+    })
   }
 
   componentWillMount(){
@@ -32,6 +59,16 @@ class MainContainer extends Component{
       } else {
         this.setState({loadingLogin: false});
       }
+    });
+  }
+
+  logout(){
+    firebase.auth().signOut()
+    .then(() => {
+      this.setState({
+        user: null
+      });
+      this.handleCloseMenu();
     });
   }
 
@@ -102,7 +139,11 @@ class MainContainer extends Component{
     if(this.state.user){
       return (
         <div>
-          <AppBar title="PQRs"/>
+          <AppBar title="PQRs" onLeftIconButtonTouchTap={this.handleCloseMenu}/>
+          <Menu open={this.state.openMenu}
+            handleClose={this.handleCloseMenu}
+            logout={this.logout}
+          />
           <TicketComponent user={ this.state.user } />
         </div>
       );
