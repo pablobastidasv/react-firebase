@@ -17,6 +17,7 @@ const Menu = (props) => {
       docked={false}
       width={200}
       open={props.open}
+      onRequestChange={props.setOpenMenu}
     >
       <MenuItem onTouchTap={props.logout}
         leftIcon={ <ExitToApp /> }
@@ -44,6 +45,13 @@ class MainContainer extends Component{
     this.handleCloseMenu = this.handleCloseMenu.bind(this);
     this.createUser = this.createUser.bind(this);
     this.logout = this.logout.bind(this);
+    this.setOpenMenu = this.setOpenMenu.bind(this);
+  }
+
+  setOpenMenu(open){
+    this.setState({
+      openMenu: open
+    });
   }
 
   handleCloseMenu(){
@@ -143,6 +151,7 @@ class MainContainer extends Component{
           <Menu open={this.state.openMenu}
             handleClose={this.handleCloseMenu}
             logout={this.logout}
+            setOpenMenu={this.setOpenMenu}
           />
           <TicketComponent user={ this.state.user } />
         </div>
