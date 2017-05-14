@@ -13,19 +13,22 @@ html, body {
 div#ticketsList{
   display: flex;
   padding: 40px;
-  flex-flow: row wrap;
+  flex-flow: row;
+  flex-wrap: wrap;
+  align-content: center space-around;
 }
 
 .ticketCard{
   flex-grow: 1;
-  width: 300px;
-  margin: 5px;
+  margin-top: 10px;
 }
 
 .floatButon{
-  position: absolute;
-  bottom: 20;
-  right: 20;
+  position: fixed;
+  margin: 1em;
+  bottom: 0;
+  right: 0px;
+  z-index: 3;
 }
 
 .loginBtn {

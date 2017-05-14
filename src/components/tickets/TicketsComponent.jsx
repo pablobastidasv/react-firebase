@@ -2,28 +2,18 @@ import React from 'react';
 import Timestamp from 'react-timestamp';
 
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card'
+import Dialog from 'material-ui/Dialog';
 
 import TicketForm from './TicketForm'
+import TicketCard from './TicketCard';
+import Conversation from './Conversation'
 
 import firebase from 'firebase';
-
-const TicketCard = (props) => {
-  return (
-    <Card className="ticketCard">
-      <CardHeader title={props.title}
-        avatar={props.user.photoUrl}
-        subtitle={props.user.displayName}/>
-      <CardText>
-        { props.description }
-      </CardText>
-    </Card>
-  );
-}
 
 const TicketList = (props) => {
   return (
     <div id='ticketsList'>
-      {props.tickets.map( ticket => <TicketCard key={ticket.key} {...ticket}/>)}
+      {props.tickets.map( ticket => <TicketCard key={ticket.key} miniSize={true} ticket={ticket} onTouchTap={props.onTouchTap}/>)}
     </div>
   );
 }
@@ -35,8 +25,13 @@ class TicketComponent extends React.Component {
 
     this.state = {
       user: props.user,
-      tickets: []
+      tickets: [],
+      ticketSel: null,
+      editingTicket: false
     };
+
+    this.showTicketDetail = this.showTicketDetail.bind(this);
+    this.handleCloseTicket = this.handleCloseTicket.bind(this);
 
     this.ticketsRef = firebase.database()
       .ref('tickets')
@@ -69,11 +64,32 @@ class TicketComponent extends React.Component {
       });
   }
 
+  showTicketDetail(ticket){
+    this.setState({
+      editingTicket: !this.state.editingTicket,
+      ticketSel: ticket
+    });
+  }
+
+  handleCloseTicket(){
+    this.setState({editingTicket: !this.state.editingTicket});
+  }
+
   render(){
     return (
       <div>
-        <TicketList tickets={ this.state.tickets }/>
+        <TicketList tickets={ this.state.tickets } onTouchTap={ this.showTicketDetail }/>
         <TicketForm user={ this.state.user }/>
+        <Dialog
+          title="Detalle del Ticket"
+          modal={false}
+          open={this.state.editingTicket}
+          onRequestClose={this.handleCloseTicket}
+          autoScrollBodyContent={true}
+          repositionOnUpdate={true}
+        >
+          <Conversation ticket={this.state.ticketSel}/>
+        </Dialog>
       </div>
     );
   };

@@ -97,6 +97,7 @@ class TicketForm extends React.Component{
             title="Crear nuevo ticket"
             actions={actions}
             modal={true}
+            autoScrollBodyContent={true}
             open={this.state.openFormModal}>
           <TextField floatingLabelText="Descripción Corta"
             value={this.state.ticket.title}
