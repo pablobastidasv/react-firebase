@@ -58,8 +58,12 @@ The app was developed using:
 
 ### Excecuting the application in dev mode
 
-`npm run serve`
+`yarn serve`
 
 ### Bulding
 
-`npm run build`
+`yarn build`
+
+### Deploy
+
+`yarn deploy`
