@@ -14,10 +14,13 @@
   "dependencies": {
     "firebase": "^3.9.0",
     "material-ui": "^0.18.0",
+    "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "react-redux": "^5.0.4",
     "react-tap-event-plugin": "^2.0.1",
-    "react-timestamp": "^4.1.0"
+    "react-timestamp": "^4.1.0",
+    "redux": "^3.6.0"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
@@ -28,6 +31,7 @@
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.1",
     "node-sass": "^4.5.2",
+    "redux-devtools": "^3.4.0",
     "sass-loader": "^6.0.3",
     "style-loader": "^0.17.0",
     "webpack": "^2.4.1",
