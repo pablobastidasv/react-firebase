@@ -5,8 +5,9 @@ import TextField from 'material-ui/TextField'
 import SelectField from 'material-ui/SelectField'
 import RaisedButton from 'material-ui/RaisedButton'
 import MenuItem from 'material-ui/MenuItem'
+import FlatButton from 'material-ui/FlatButton'
 
-const RegistrationForm = ({onRegister, userName, userEmail,
+const RegistrationForm = ({onRegister, userName, userEmail, handleCancel,
   company, handleCompanyChange, companySelectionError, companyItems,
   apartment, handleApartmentChange, apartmentInputError }) => {
 
@@ -49,6 +50,8 @@ const RegistrationForm = ({onRegister, userName, userEmail,
             <RaisedButton label="Guardar"
               type="submit"
               primary={true}/>
+            <FlatButton label="Cancelar" secondary={true}
+              onTouchTap={ handleCancel }/>
           </CardActions>
       </Card>
       </form>

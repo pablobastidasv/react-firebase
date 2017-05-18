@@ -82,6 +82,10 @@ class Login extends React.Component{
     });
   }
 
+  logout(){
+    firebase.auth().signOut();
+  }
+
   renderButton(){
     if(this.props.showSubscription){
       return (
@@ -95,6 +99,7 @@ class Login extends React.Component{
           userEmail={ firebase.auth().currentUser.email }
           companySelectionError={ this.state.companySelectionError }
           apartmentInputError={ this.state.apartmentInputError }
+          handleCancel={ this.logout }
         />
       );
     }else if(this.props.loading) {

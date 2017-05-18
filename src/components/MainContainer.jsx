@@ -48,10 +48,11 @@ class MainContainer extends Component{
       if (user) {
         this.userExist(user.uid);
       } else {
-        this.handleCloseMenu();
         this.setState({
           loadingLogin: false,
-          user: null
+          user: null,
+          showSubscription: false,
+          openMenu: !this.state.openMenu
         });
       }
     });
