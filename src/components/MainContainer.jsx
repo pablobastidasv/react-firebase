@@ -2,31 +2,14 @@ import React, { Component } from 'react';
 
 import firebase from 'firebase';
 
+// My Components
 import TicketComponent from './tickets/TicketsComponent';
 import Login from './Login'
+import Menu from './Menu'
 
+// Third Party components
 import AppBar from 'material-ui/AppBar';
 import CircularProgress from 'material-ui/CircularProgress'
-import MenuItem from 'material-ui/MenuItem'
-import Drawer from 'material-ui/Drawer'
-import ExitToApp from 'material-ui/svg-icons/action/exit-to-app'
-
-const Menu = (props) => {
-  return(
-    <Drawer
-      docked={false}
-      width={200}
-      open={props.open}
-      onRequestChange={props.setOpenMenu}
-    >
-      <MenuItem onTouchTap={() => firebase.auth().signOut()}
-        leftIcon={ <ExitToApp /> }
-      >
-        Cerrar sesión
-      </MenuItem>
-    </Drawer>
-  )
-}
 
 class MainContainer extends Component{
   constructor(){
@@ -45,6 +28,7 @@ class MainContainer extends Component{
     this.handleCloseMenu = this.handleCloseMenu.bind(this);
     this.createUser = this.createUser.bind(this);
     this.setOpenMenu = this.setOpenMenu.bind(this);
+    this.logout = this.logout.bind(this);
   }
 
   setOpenMenu(open){
@@ -136,12 +120,17 @@ class MainContainer extends Component{
       .catch(e => console.log(`Error ${e.code}: ${e.message}`));
   }
 
+  logout(){
+    firebase.auth().signOut();
+  }
+
   renderApp(){
     if(this.state.user){
       return (
         <div>
           <AppBar title="PQRs" onLeftIconButtonTouchTap={this.handleCloseMenu}/>
           <Menu open={this.state.openMenu}
+            handleLogout={ this.logout }
             handleClose={this.handleCloseMenu}
             setOpenMenu={this.setOpenMenu}
           />

@@ -16,8 +16,11 @@
     "material-ui": "^0.18.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "react-redux": "^5.0.4",
     "react-tap-event-plugin": "^2.0.1",
-    "react-timestamp": "^4.1.0"
+    "react-timestamp": "^4.1.0",
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",

@@ -3,59 +3,10 @@ import React from 'react'
 import FlatButton from 'material-ui/FlatButton';
 import { Card, CardText, CardHeader, CardActions } from 'material-ui/Card';
 import CircularProgress from 'material-ui/CircularProgress'
-import TextField from 'material-ui/TextField'
-import SelectField from 'material-ui/SelectField'
-import RaisedButton from 'material-ui/RaisedButton'
-import MenuItem from 'material-ui/MenuItem'
 
 import firebase from 'firebase';
 
-const RegistrationForm = (props) => {
-  return (
-    <div className="registrationForm">
-      <form onSubmit={ props.onRegister }>
-        <Card>
-          <CardHeader title='Formulario de registro'
-            subtitle='Ingrese la información requerida para continuar su inicio de sesión'
-            avatar="./img/key.svg"/>
-          <CardText>
-            <div className="registrationForm">
-              <TextField
-                disabled={true}
-                defaultValue={props.userName}
-                floatingLabelText="Nombre"
-              />
-              <TextField
-                disabled={true}
-                defaultValue={props.userEmail}
-                floatingLabelText="Correo electrónico"
-              />
-              <SelectField
-                floatingLabelText="Copropiedad"
-                value={props.company}
-                onChange={props.handleCompanyChange}
-                errorText={props.companySelectionError}
-                required
-              >
-                {props.companyItems.map( item => <MenuItem key={ item.value } {...item}/>)}
-              </SelectField>
-              <TextField floatingLabelText='Apartamento'
-                value={props.apartment}
-                onChange={props.handleApartmentChange}
-                errorText={ props.apartmentInputError }
-              />
-            </div>
-          </CardText>
-          <CardActions>
-            <RaisedButton label="Guardar"
-              type="submit"
-              primary={true}/>
-          </CardActions>
-      </Card>
-      </form>
-    </div>
-  );
-}
+import RegistrationForm from './RegistrationForm'
 
 class Login extends React.Component{
 
