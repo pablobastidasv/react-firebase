@@ -12,23 +12,12 @@ import CommunicationComment from 'material-ui/svg-icons/communication/comment';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
 import TicketCard from './TicketCard'
+import Comment from './Comment'
 
-const Comment = (props) => {
-  return (
-    <div>
-      <Card className='ticketCard'>
-        <CardText>
-          { props.comment }
-        </CardText>
-      </Card>
-    </div>
-  );
-}
-
-const Comments = (props) => {
+const Comments = ( {comments} ) => {
   return (
     <div style={{display:'flex', flexFlow:'column',justifyContent:'space-around'}}>
-      { props.comments.map( comment => <Comment key={comment.key} {...comment} /> ) }
+      { comments.map( comment => <Comment key={comment.key} {...comment} /> ) }
     </div>
   );
 }
