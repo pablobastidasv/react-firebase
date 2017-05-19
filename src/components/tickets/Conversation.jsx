@@ -11,16 +11,9 @@ import TextField from 'material-ui/TextField';
 import CommunicationComment from 'material-ui/svg-icons/communication/comment';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
+// My Components
 import TicketCard from './TicketCard'
-import Comment from './Comment'
-
-const Comments = ( {comments} ) => {
-  return (
-    <div style={{display:'flex', flexFlow:'column',justifyContent:'space-around'}}>
-      { comments.map( comment => <Comment key={comment.key} {...comment} /> ) }
-    </div>
-  );
-}
+import Comments from './Comments'
 
 class CommentForm extends React.Component {
 
