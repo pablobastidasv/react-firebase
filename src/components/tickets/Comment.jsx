@@ -1,16 +1,23 @@
 import React from 'react'
 
-import { Card, CardText } from 'material-ui/Card'
+import Timestamp from 'react-timestamp'
+import Paper from 'material-ui/Paper'
 
-const Comment = ( { comment } ) => {
+require ('./Comment.scss')
+
+const Comment = ( { comment, date, user } ) => {
   return (
-    <div>
-      <Card className='ticketCard'>
-        <CardText>
-          { comment }
-        </CardText>
-      </Card>
-    </div>
+    <Paper className='comment' zDepth={1}>
+      <div>
+        <span>{user.displayName}</span> dijo:
+      </div>
+      <div>
+        { comment }
+      </div>
+      <div>
+        <Timestamp time={ date } format='full'/>
+      </div>
+    </Paper>
   );
 }
 

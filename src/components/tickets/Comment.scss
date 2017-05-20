@@ -1,0 +1,20 @@
+.comment {
+  margin-bottom: 10px;
+  padding: 1em;
+  padding: .2em .3em;
+}
+
+.comment div:first-child {
+  font-size: .7em;
+  margin-bottom: .5em;
+}
+
+.comment div:first-child span {
+  color: gray;
+}
+
+.comment div:last-child {
+  font-size: .7em;
+  margin-top: .5em;
+  text-align: right;
+}
