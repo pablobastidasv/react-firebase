@@ -3,7 +3,7 @@ import React from 'react'
 import Timestamp from 'react-timestamp'
 import Paper from 'material-ui/Paper'
 
-require ('./Comment.scss')
+require ('./Tickets.scss')
 
 const Comment = ( { comment, date, user } ) => {
   return (
