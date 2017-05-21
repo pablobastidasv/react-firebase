@@ -4,19 +4,11 @@ import Timestamp from 'react-timestamp';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card'
 import Dialog from 'material-ui/Dialog';
 
+import TicketsList from './TicketsList'
 import TicketForm from './TicketForm'
-import TicketCard from './TicketCard';
 import Conversation from './Conversation'
 
 import firebase from 'firebase';
-
-const TicketList = (props) => {
-  return (
-    <div id='ticketsList'>
-      {props.tickets.map( ticket => <TicketCard key={ticket.key} miniSize={true} ticket={ticket} onTouchTap={props.onTouchTap}/>)}
-    </div>
-  );
-}
 
 class TicketComponent extends React.Component {
 
@@ -78,7 +70,7 @@ class TicketComponent extends React.Component {
   render(){
     return (
       <div>
-        <TicketList tickets={ this.state.tickets } onTouchTap={ this.showTicketDetail }/>
+        <TicketsList tickets={ this.state.tickets } onTouchTap={ this.showTicketDetail }/>
         <TicketForm user={ this.state.user }/>
         <Dialog
           title="Detalle del Ticket"
