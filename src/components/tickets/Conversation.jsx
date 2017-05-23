@@ -31,6 +31,7 @@ class Conversation extends React.Component {
     this.ticketRef = firebase.database()
       .ref('tickets')
       .child('rincon_parque')
+      .child('Q')
       .child(props.ticket.key);
 
     this.loadComment = this.loadComment.bind(this);

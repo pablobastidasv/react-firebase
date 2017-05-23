@@ -27,7 +27,8 @@ class TicketComponent extends React.Component {
 
     this.ticketsRef = firebase.database()
       .ref('tickets')
-      .child(props.user.company);
+      .child(props.user.company)
+      .child("Q");
   }
 
   componentWillMount(){

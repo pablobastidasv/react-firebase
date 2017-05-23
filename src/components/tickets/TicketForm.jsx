@@ -1,12 +1,14 @@
-import React from 'react';
+import React from 'react'
 
-import FlatButton from 'material-ui/FlatButton';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
-import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton'
+import FloatingActionButton from 'material-ui/FloatingActionButton'
+import ContentAdd from 'material-ui/svg-icons/content/add'
+import Dialog from 'material-ui/Dialog'
 import Snackbar from 'material-ui/Snackbar'
 import TextField from 'material-ui/TextField'
-import RaisedButton from 'material-ui/RaisedButton';
+import RaisedButton from 'material-ui/RaisedButton'
+import SelectField from 'material-ui/SelectField'
+import MenuItem from 'material-ui/MenuItem'
 
 import firebase from 'firebase';
 
@@ -19,7 +21,10 @@ class TicketForm extends React.Component{
       openSnackbar: false,
       snackBarMsg: 'El ticket ha sido creado exitosamente.',
       user: props.user,
-      ticket: {}
+      ticket: {},
+      typeErrorMsg: '',
+      shortDescErrorMsg: '',
+      detailErrorMsg: ''
     }
 
     this.ticketsRef = firebase.database()
@@ -31,6 +36,7 @@ class TicketForm extends React.Component{
     this.saveTicket = this.saveTicket.bind(this);
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
+    this.handleTypeChange = this.handleTypeChange.bind(this);
   }
 
   openForm(){
@@ -51,7 +57,7 @@ class TicketForm extends React.Component{
       displayName: this.state.user.displayName
     }
     ticket.state = 'NEW';
-    this.ticketsRef.push( ticket );
+    this.ticketsRef.child(ticket.type).push( ticket );
 
     this.setState({
       ticket: {}
@@ -72,6 +78,12 @@ class TicketForm extends React.Component{
   handleDescriptionChange(event, description){
     let ticket = Object.assign({}, this.state.ticket);
     ticket.description = description;
+    this.setState({ ticket })
+  }
+
+  handleTypeChange(event, index, value){
+    let ticket = Object.assign({}, this.state.ticket);
+    ticket.type = value;
     this.setState({ ticket })
   }
 
@@ -99,8 +111,18 @@ class TicketForm extends React.Component{
             modal={true}
             autoScrollBodyContent={true}
             open={this.state.openFormModal}>
+          <SelectField value={ this.state.ticket.type }
+            onChange={ this.handleTypeChange }
+            errorText={ this.state.typeErrorMsg }
+            floatingLabelText="Tipo de ticket">
+            <MenuItem key={1} value="Q" primaryText="Queja"/>
+            <MenuItem key={2} value="P" primaryText="Petición" disabled={true}/>
+            <MenuItem key={3} value="R" primaryText="Recurso" disabled={true}/>
+            <MenuItem key={4} value="F" primaryText="Felicitación" disabled={true}/>
+          </SelectField>
           <TextField floatingLabelText="Descripción Corta"
             value={this.state.ticket.title}
+            errorText={ this.state.shortDescErrorMsg }
             onChange={this.handleTitleChange}
           />
           <TextField
@@ -109,6 +131,7 @@ class TicketForm extends React.Component{
             fullWidth={true}
             value={this.state.ticket.description}
             onChange={this.handleDescriptionChange}
+            errorText={ this.state.detailErrorMsg }
             floatingLabelText="Detalle"
           />
         </Dialog>
