@@ -71,8 +71,8 @@ class TicketComponent extends React.Component {
   render(){
     return (
       <div>
-        <TicketsList tickets={ this.state.tickets } onTouchTap={ this.showTicketDetail }/>
         <TicketForm user={ this.state.user }/>
+        <TicketsList tickets={ this.state.tickets } onTouchTap={ this.showTicketDetail }/>
         <Dialog
           title="Detalle del Ticket"
           modal={false}

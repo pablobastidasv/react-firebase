@@ -2,6 +2,8 @@ import React from 'react'
 
 import TicketCard from './TicketCard'
 
+require ('./Tickets.scss')
+
 const TicketsList = (props) => {
   return (
     <div id='ticketsList'>

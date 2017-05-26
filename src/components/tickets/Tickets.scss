@@ -19,3 +19,21 @@
   text-align: right;
   color: gray;
 }
+
+.createTicketBtn {
+  margin-left: 40px;
+  margin-top: 40px;
+}
+
+div#ticketsList{
+  display: flex;
+  padding: 40px;
+  flex-flow: row;
+  flex-wrap: wrap;
+  align-content: center space-around;
+}
+
+.ticketCard{
+  flex-grow: 1;
+  margin-top: 10px;
+}

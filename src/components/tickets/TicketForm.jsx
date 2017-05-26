@@ -12,6 +12,8 @@ import MenuItem from 'material-ui/MenuItem'
 
 import firebase from 'firebase';
 
+require ('./Tickets.scss')
+
 class TicketForm extends React.Component{
 
   constructor(props){
@@ -22,7 +24,6 @@ class TicketForm extends React.Component{
       snackBarMsg: 'El ticket ha sido creado exitosamente.',
       user: props.user,
       ticket: {},
-      typeErrorMsg: '',
       shortDescErrorMsg: '',
       detailErrorMsg: ''
     }
@@ -36,7 +37,6 @@ class TicketForm extends React.Component{
     this.saveTicket = this.saveTicket.bind(this);
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
-    this.handleTypeChange = this.handleTypeChange.bind(this);
   }
 
   openForm(){
@@ -51,7 +51,8 @@ class TicketForm extends React.Component{
     let ticket = Object.assign({}, this.state.ticket);
     ticket.date = new Date().toISOString();
     ticket.priority = null;
-    ticket.userId = this.state.user.uid
+    ticket.userId = this.state.user.uid;
+    ticket.type = "Q";
     ticket.user = {
       photoUrl: this.state.user.photoURL,
       displayName: this.state.user.displayName
@@ -81,12 +82,6 @@ class TicketForm extends React.Component{
     this.setState({ ticket })
   }
 
-  handleTypeChange(event, index, value){
-    let ticket = Object.assign({}, this.state.ticket);
-    ticket.type = value;
-    this.setState({ ticket })
-  }
-
   render(){
     const actions = [
       <FlatButton label='Cancelar'
@@ -99,41 +94,38 @@ class TicketForm extends React.Component{
 
     return (
       <div>
-        <FloatingActionButton className='floatButon'
-          secondary={true}
-          onTouchTap={this.openForm}>
-          <ContentAdd />
-        </FloatingActionButton>
+        <RaisedButton className='createTicketBtn'
+          primary={true}
+          onTouchTap={this.openForm}
+          label="Crear nueva queja"
+        />
 
         <Dialog
-            title="Crear nuevo ticket"
+            title="Crear nueva queja"
             actions={actions}
             modal={true}
             autoScrollBodyContent={true}
             open={this.state.openFormModal}>
-          <SelectField value={ this.state.ticket.type }
-            onChange={ this.handleTypeChange }
-            errorText={ this.state.typeErrorMsg }
-            floatingLabelText="Tipo de ticket">
-            <MenuItem key={1} value="Q" primaryText="Queja"/>
-            <MenuItem key={2} value="P" primaryText="Petición" disabled={true}/>
-            <MenuItem key={3} value="R" primaryText="Recurso" disabled={true}/>
-            <MenuItem key={4} value="F" primaryText="Felicitación" disabled={true}/>
-          </SelectField>
-          <TextField floatingLabelText="Descripción Corta"
-            value={this.state.ticket.title}
-            errorText={ this.state.shortDescErrorMsg }
-            onChange={this.handleTitleChange}
-          />
-          <TextField
-            multiLine={true}
-            rows={5}
-            fullWidth={true}
-            value={this.state.ticket.description}
-            onChange={this.handleDescriptionChange}
-            errorText={ this.state.detailErrorMsg }
-            floatingLabelText="Detalle"
-          />
+          <div style={{display: 'flex', flexFlow: 'column'}}>
+            <TextField floatingLabelText="Tipo de ticket"
+              value="Queja"
+              disabled={true}
+            />
+            <TextField floatingLabelText="Descripción Corta"
+              value={this.state.ticket.title}
+              errorText={ this.state.shortDescErrorMsg }
+              onChange={this.handleTitleChange}
+            />
+            <TextField
+              multiLine={true}
+              rows={5}
+              fullWidth={true}
+              value={this.state.ticket.description}
+              onChange={this.handleDescriptionChange}
+              errorText={ this.state.detailErrorMsg }
+              floatingLabelText="Detalle"
+            />
+          </div>
         </Dialog>
 
         <Snackbar
