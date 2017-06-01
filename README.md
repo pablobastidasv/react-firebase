@@ -1,6 +1,6 @@
-# SQRs App
+[![Build](https://travis-ci.org/pablobastidasv/tickets-manager.svg?branch=master)](https://travis-ci.org/pablobastidasv/tickets-manager)
 
-![Build](https://travis-ci.org/pablobastidasv/tickets-manager.svg?branch=master)
+# SQRs App
 
 ## Firebase configuration
 
@@ -66,6 +66,6 @@ The app was developed using:
 
 `yarn build`
 
-### Deploy
+### Deploy
 
 `yarn deploy`
