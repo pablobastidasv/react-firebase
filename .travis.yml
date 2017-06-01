@@ -2,17 +2,20 @@ language: node_js
 
 cache:
   directories:
-    - "node_modules"
+  - node_modules
 
 branches:
   only:
-    - master
+  - master
 
 before_script:
-  - npm install -g firebase-tools
+- npm install -g firebase-tools
 
 script:
-  - yarn build
+- yarn build
 
 after_success:
-  - firebase deploy --token=${FIREBASE_TOKEN}
+- firebase deploy --token=${FIREBASE_TOKEN}
+
+before_install:
+- openssl aes-256-cbc -K $encrypted_7a90e7a5ec51_key -iv $encrypted_7a90e7a5ec51_iv-in config.js.enc -out src/config.js -d
