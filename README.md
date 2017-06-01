@@ -1,5 +1,7 @@
 # SQRs App
 
+![Build](https://travis-ci.org/pablobastidasv/tickets-manager.svg?branch=master)
+
 ## Firebase configuration
 
 Copy and rename the `config.js.example` to `config.js`.
