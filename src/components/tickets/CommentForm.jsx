@@ -3,6 +3,7 @@ import React from 'react'
 import { Card, CardText, CardHeader, CardActions } from 'material-ui/Card'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import RaisedButton from 'material-ui/RaisedButton'
+import FlatButton from 'material-ui/FlatButton'
 import TextField from 'material-ui/TextField';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
@@ -74,8 +75,8 @@ class CommentForm extends React.Component {
         </CardText>
 
         <CardActions>
-          <RaisedButton label="Cancelar" onTouchTap={this.handleShowForm}/>
-          <RaisedButton label="Guardar" secondary={true} onTouchTap={this.saveComment}/>
+          <FlatButton label="Cancelar" onTouchTap={this.handleShowForm}/>
+          <RaisedButton label="Guardar" primary={true} onTouchTap={this.saveComment}/>
         </CardActions>
       </Card>;
 
