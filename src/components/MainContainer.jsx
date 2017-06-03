@@ -127,9 +127,10 @@ class MainContainer extends Component{
 
   renderApp(){
     if(this.state.user){
+      const title = <img src='../img/logo-socobi-header.png'></img>;
       return (
         <div>
-          <AppBar title="PQRs" onLeftIconButtonTouchTap={this.handleCloseMenu}/>
+          <AppBar title={ title } onLeftIconButtonTouchTap={this.handleCloseMenu}/>
           <Menu open={this.state.openMenu}
             handleLogout={ this.logout }
             handleClose={this.handleCloseMenu}
